@@ -1,0 +1,30 @@
+.nav-bar {
+  padding: 20px;
+  width: 100%;
+}
+
+.nav-bar nav {
+  display: flex;
+  justify-content: right;
+  margin-left: auto;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: right;
+  gap: 15px;
+  padding-right: 70px;
+}
+
+.nav-item {
+  color: black;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.nav-bar #logo {
+  width: 20%;
+  height: auto;
+  margin-right: auto;
+}
