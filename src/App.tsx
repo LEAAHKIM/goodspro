@@ -6,6 +6,10 @@ function App() {
     <div>
       <Navbar />
       <Hero />
+      <section className="get-started">
+        <h2>the <i>git log</i> for your espresso extractions.</h2>
+        <button id="get-started-button">get started</button>
+      </section>
     </div>
   )
 }
