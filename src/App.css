@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .get-started h2 {
   padding-top: 120px;
   font-size: 3rem;
@@ -21,5 +22,5 @@
 }
 
 #get-started-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
