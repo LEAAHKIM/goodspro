@@ -5,7 +5,7 @@
 
 .nav-bar nav {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   margin-left: auto;
   align-items: center;
 }
@@ -23,8 +23,3 @@
   font-size: 24px;
 }
 
-.nav-bar #logo {
-  width: 20%;
-  height: auto;
-  margin-right: auto;
-}

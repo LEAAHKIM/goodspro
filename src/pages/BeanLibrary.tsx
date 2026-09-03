@@ -1,4 +1,3 @@
-// src/pages/BeanLibrary.tsx
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import BeanForm from '../components/BeanForm'

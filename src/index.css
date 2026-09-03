@@ -1,3 +1,9 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .card {
   background: white;
   border: 1px solid #e5e5e5;
@@ -5,7 +11,7 @@
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   max-width: 320px;
-  margin: 20px;
+  margin: 20px 0px;
 }
 
 .context-menu {
@@ -34,6 +40,7 @@
 
 .shot-card {
   position: relative;  
+  margin-right: 20px;
 }
 
 .shot-date {

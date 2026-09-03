@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 import BeanLibrary from './pages/BeanLibrary' 
 import BeanDetail from './pages/BeanDetail'
+import { div } from 'motion/react-client'
 
 function App() {
   return (
@@ -15,14 +16,30 @@ function App() {
           <Navbar />
             <Hero />
             <section className="get-started">
-              <h2>the <i>git log</i> for your espresso extractions.</h2>
-              <Link to="/beans" id="get-started-button">get started</Link>
+              <h2>it's time to extract good espresso.</h2>
+              <Link to="/beans" id="get-started-button" style={{textDecoration:"none"}}>get started</Link>
             </section>
         </div>
-      }
+        }
       />
-      <Route path="/beans" element={<BeanLibrary/>}/>
-      <Route path="/beans/:beanId" element={<BeanDetail/>}/>
+      <Route 
+        path="/beans" 
+        element={
+          <div>
+            <Navbar />
+            <BeanLibrary />
+          </div>
+        }
+      />
+      <Route 
+        path="/beans/:beanId" 
+        element={
+          <div>
+            <Navbar/>
+            <BeanDetail/>
+          </div>
+        }
+      />
     </Routes>
   )
 }

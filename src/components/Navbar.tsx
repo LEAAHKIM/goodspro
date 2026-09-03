@@ -4,7 +4,9 @@ function Navbar() {
   return (
     <div className="nav-bar">
       <nav>
-        <img id="logo" src="src/assets/logo.png" alt="goodspro" />
+        <div>      
+          <a className="nav-item" href="">goodspro</a>
+        </div>
         <div className="nav-links">
           <a className="nav-item" href="">login</a>
           <a className="nav-item" href="">about</a>

@@ -30,7 +30,7 @@ function BeanForm({ onBeanAdded }: BeanFormProps) {
     setRoast('')
     setRoastDate('')
     setOpenedDate('')
-    onBeanAdded() // tell the parent "a bean was added, please refresh"
+    onBeanAdded()  
   }
 
   return (
