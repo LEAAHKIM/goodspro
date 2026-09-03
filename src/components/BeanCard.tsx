@@ -1,4 +1,4 @@
-// src/components/BeanCard.tsx
+import {useNavigate} from 'react-router-dom'
 interface Bean {
   id: string
   name: string
@@ -14,9 +14,12 @@ interface BeanCardProps {
 }
 
 function BeanCard({ bean, onContextMenu }: BeanCardProps) {
+  const navigate = useNavigate() 
+
   return (
     <div
       className="bean-card card"
+      onClick={() => navigate(`/beans/${bean.id}`)}
       onContextMenu={(e) => {
         e.preventDefault()
         onContextMenu(e, bean)

@@ -11,7 +11,7 @@ function ContextMenu({x, y, onDelete, onClose} : ContextMenuProps) {
       {}
       <div style={{position:'fixed', inset: 0, zIndex:10}} onClick={onClose}/>
       <div className="context-menu" style={{position:'fixed', top:y, left:x, zIndex: 20}}>
-        <button onClick={onDelete}>Delete bean</button>
+        <button onClick={onDelete}>Delete</button>
       </div>
     </>
   )

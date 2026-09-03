@@ -31,3 +31,15 @@
 .context-menu button:hover {
   background: #f5f5f5;
 }
+
+.shot-card {
+  position: relative;  
+}
+
+.shot-date {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.75rem;
+  color: #888;
+}

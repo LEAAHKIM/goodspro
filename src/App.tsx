@@ -3,6 +3,7 @@ import './App.css'
 import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 import BeanLibrary from './pages/BeanLibrary' 
+import BeanDetail from './pages/BeanDetail'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       }
       />
       <Route path="/beans" element={<BeanLibrary/>}/>
+      <Route path="/beans/:beanId" element={<BeanDetail/>}/>
     </Routes>
   )
 }
