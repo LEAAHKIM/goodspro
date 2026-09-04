@@ -5,6 +5,7 @@ import ShotForm from '../components/ShotForm'
 import ShotCard from '../components/ShotCard'
 import ContextMenu from '../components/ContextMenu'
 import type { Shot } from '../components/ShotCard'
+import sproMachine from '../assets/spro_machine.png'
 
 interface Bean {
   id: string
@@ -85,7 +86,7 @@ function BeanDetail() {
             {bean.opened_date && <p>Opened: {bean.opened_date}</p>}
           </div>
         </div>
-        <img src="../src/assets/spro_machine.png" style={{width:'16rem', margin:'30px 50px 0px'}}></img>
+        <img src={sproMachine} style={{width:'16rem', margin:'30px 50px 0px'}}></img>
       </div>
       <div style={{display:'flex', flexDirection:'row', gap:'100px'}}>
         <div>
