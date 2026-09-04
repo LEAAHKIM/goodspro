@@ -34,7 +34,7 @@ function BeanForm({ onBeanAdded }: BeanFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bean-form card" style={{display:'flex', flexDirection:'column'}}>
+    <form onSubmit={handleSubmit} className="bean-form card" style={{display:'flex', gap:'7px', flexDirection:'column'}}>
       <h3>Add New</h3>
       <input
         placeholder="Bean name"

@@ -4,7 +4,6 @@ import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 import BeanLibrary from './pages/BeanLibrary' 
 import BeanDetail from './pages/BeanDetail'
-import { div } from 'motion/react-client'
 
 function App() {
   return (

@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import ShotForm from '../components/ShotForm'
 import ShotCard from '../components/ShotCard'
 import ContextMenu from '../components/ContextMenu'
+import type { Shot } from '../components/ShotCard'
 
 interface Bean {
   id: string
@@ -12,17 +13,6 @@ interface Bean {
   roast_date: string | null
   opened_date: string | null
   notes: string | null
-}
-
-interface Shot {
-  id: string
-  bean_id: string
-  dose_grams: number | null
-  grind_size: number
-  extraction_time_seconds: number | null
-  extraction_weight_grams: number | null
-  tasting_notes: string | null
-  created_at: string
 }
 
 function BeanDetail() {
@@ -85,36 +75,46 @@ function BeanDetail() {
   if (!bean) return <p>Loading...</p>
 
   return (
-    <div style={{ margin:'1rem', padding:'2rem', border:'2px black solid'}}>
-      <h1>{bean.name}</h1>
-      <div style={{padding: '2rem', border:'2.5px #e5e5e5 dotted', width:'fit-content', borderRadius: '12px'}}>
-        <p>{bean.roast}</p>
-        {bean.roast_date && <p>Roasted: {bean.roast_date}</p>}
-        {bean.opened_date && <p>Opened: {bean.opened_date}</p>}
-      </div>
-      <h2>LOG YOUR SHOT</h2>
-      <ShotForm beanId={beanId!} onShotAdded={fetchShots} />
-
-      <h2>Shot history</h2>
-      {shots.length === 0 ? (
-        <p>No shots logged yet.</p>
-      ) : (
-        <div className="shot-grid" style={{display:'flex'}}>
-          {shots.map((shot) => (
-            <ShotCard key={shot.id} shot={shot} onContextMenu={handleShotContextMenu} />
-          ))}
+    <div style={{ margin:'1rem', padding:'2rem', border:'2px #665550 solid'}}>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-start'}}>
+        <div>
+          <h1>{bean.name}</h1>
+          <div style={{padding: '2rem', border:'2.5px #e5e5e5 dotted', width:'fit-content', borderRadius: '12px'}}>
+            <p>{bean.roast}</p>
+            {bean.roast_date && <p>Roasted: {bean.roast_date}</p>}
+            {bean.opened_date && <p>Opened: {bean.opened_date}</p>}
+          </div>
         </div>
-      )}
+        <img src="../src/assets/spro_machine.png" style={{width:'16rem', margin:'30px 50px 0px'}}></img>
+      </div>
+      <div style={{display:'flex', flexDirection:'row', gap:'100px'}}>
+        <div>
+           <h2>LOG YOUR SHOT</h2>
+          <ShotForm beanId={beanId!} onShotAdded={fetchShots} />
+        </div>
+        <div>
+          <h2>Shot history</h2>
+          {shots.length === 0 ? (
+            <p>No shots logged yet.</p>
+          ) : (
+            <div className="shot-grid" style={{display:'flex'}}>
+              {shots.map((shot) => (
+                <ShotCard key={shot.id} shot={shot} onContextMenu={handleShotContextMenu} />
+              ))}
+            </div>
+          )}
 
-      {menu && (
-        <ContextMenu
-          x={menu.x}
-          y={menu.y}
-          onDelete={handleDeleteShot}
-          onClose={() => setMenu(null)}
-        />
-      )}
-    </div>
+          {menu && (
+            <ContextMenu
+              x={menu.x}
+              y={menu.y}
+              onDelete={handleDeleteShot}
+              onClose={() => setMenu(null)}
+            />
+          )}
+        </div>
+          </div>
+      </div>
   )
 }
 

@@ -53,29 +53,29 @@ function BeanLibrary() {
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: '2rem'}}>
       <h1>Your Beans</h1>
+      <div style={{display:'flex', flexDirection:'row', gap:'20px'}}>
+        <BeanForm onBeanAdded={fetchBeans} />
+        {beans.length === 0 ? (
+          <p>No beans logged yet.</p>
+        ) : (
+          <div className="bean-grid">
+            {beans.map((bean) => (
+              <BeanCard key={bean.id} bean={bean} onContextMenu={handleCardContextMenu} />
+            ))}
+          </div>
+        )}
 
-      <BeanForm onBeanAdded={fetchBeans} />
-
-      {beans.length === 0 ? (
-        <p>No beans logged yet.</p>
-      ) : (
-        <div className="bean-grid">
-          {beans.map((bean) => (
-            <BeanCard key={bean.id} bean={bean} onContextMenu={handleCardContextMenu} />
-          ))}
+        {menu && (
+          <ContextMenu
+            x={menu.x}
+            y={menu.y}
+            onDelete={handleDelete}
+            onClose={() => setMenu(null)}
+          />
+        )}
         </div>
-      )}
-
-      {menu && (
-        <ContextMenu
-          x={menu.x}
-          y={menu.y}
-          onDelete={handleDelete}
-          onClose={() => setMenu(null)}
-        />
-      )}
     </div>
   )
 }

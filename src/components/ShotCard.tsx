@@ -1,4 +1,4 @@
-interface Shot {
+export interface Shot {
   id: string
   bean_id: string
   dose_grams: number | null
@@ -6,6 +6,7 @@ interface Shot {
   extraction_time_seconds: number | null
   extraction_weight_grams: number | null
   tasting_notes: string | null
+  flavor_tags: string[] | null
   created_at: string
 }
 
@@ -34,6 +35,9 @@ function ShotCard({ shot, onContextMenu }: ShotCardProps) {
       <p>Time: {shot.extraction_time_seconds}s</p>
       <p>Yield: {shot.extraction_weight_grams}g</p>
       {shot.tasting_notes && <p>Notes: {shot.tasting_notes}</p>}
+      {shot.flavor_tags && shot.flavor_tags.length > 0 && (
+      <p>{shot.flavor_tags.join(', ')}</p>
+)}
     </div>
   )
 }
