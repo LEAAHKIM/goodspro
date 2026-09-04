@@ -18,9 +18,17 @@ function BeanLibrary() {
   const [menu, setMenu] = useState<{ x: number; y: number; bean: Bean } | null>(null)
 
   async function fetchBeans() {
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      setBeans([])
+      return
+    }
+
     const { data, error } = await supabase
       .from('beans')
       .select('*')
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
 
     if (error) {

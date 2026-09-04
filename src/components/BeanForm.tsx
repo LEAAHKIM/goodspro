@@ -14,11 +14,19 @@ function BeanForm({ onBeanAdded }: BeanFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      console.error('Not logged in')
+      return
+    }
+
     const { error } = await supabase.from('beans').insert({
       name,
       roast,
       roast_date: roastDate || null,
       opened_date: openedDate || null,
+      user_id: user.id,
     })
 
     if (error) {
