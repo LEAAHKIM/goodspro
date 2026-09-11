@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 export interface Shot {
   id: string
   bean_id: string
@@ -10,6 +12,21 @@ export interface Shot {
   created_at: string
 }
 
+export interface ShotAnalysis {
+  diagnosis:
+    | "under_extracted"
+    | "over_extracted"
+    | "balanced"
+    | "uncertain"
+  confidence: number
+  evidence: string[]
+  recommendation: {
+    variable: "grind" | "dose" | "yield" | "temperature"
+    direction: "finer" | "coarser" | "increase" | "decrease"
+    magnitude: "small" | "moderate" | "large"
+  }
+  explanation: string
+}
 interface ShotCardProps {
   shot: Shot
   onContextMenu: (e: React.MouseEvent, shot: Shot) => void
@@ -20,7 +37,38 @@ function ShotCard({ shot, onContextMenu }: ShotCardProps) {
     month: 'short',
     day: 'numeric',
   })
+  const [analysis, setAnalysis] = useState<ShotAnalysis | null>(null)
+  const [analyzing, setAnalyzing] = useState(false)
+  const [analysisError, setAnalysisError] = useState<string | null>(null)
 
+  async function handleAnalyzeShot() {
+    setAnalyzing(true)
+    setAnalysisError(null)
+
+    const { data, error } = await supabase.functions.invoke(
+      'analyze-shot',
+      {
+        body: {
+          dose: shot.dose_grams,
+          grindSize: shot.grind_size,
+          time: shot.extraction_time_seconds,
+          weight: shot.extraction_weight_grams,
+          notes: shot.tasting_notes,
+          flavorTags: shot.flavor_tags,
+        },
+      }
+    )
+
+    if (error) {
+      console.error('AI analysis error:', error)
+      setAnalysisError(error.message)
+      setAnalyzing(false)
+      return
+    }
+    console.log('AI analysis:', data.analysis)
+    setAnalysis(data.analysis)
+    setAnalyzing(false)
+  }
   return (
     <div
       className="shot-card card"
@@ -38,6 +86,9 @@ function ShotCard({ shot, onContextMenu }: ShotCardProps) {
       {shot.flavor_tags && shot.flavor_tags.length > 0 && (
       <p>{shot.flavor_tags.join(', ')}</p>
 )}
+      <button onClick={handleAnalyzeShot} disabled={analyzing}>
+      {analyzing ? 'Analyzing...' : 'Analyze Shot'}
+      </button>
     </div>
   )
 }

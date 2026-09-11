@@ -17,6 +17,7 @@ interface Bean {
 }
 
 function BeanDetail() {
+  alert("I AM RUNNING THE NEW BEAN DETAIL");
   const { beanId } = useParams()
   const [bean, setBean] = useState<Bean | null>(null)
   const [shots, setShots] = useState<Shot[]>([])
@@ -95,6 +96,9 @@ function BeanDetail() {
         </div>
         <div>
           <h2>Shot history</h2>
+          <p style={{ fontSize: '30px', color: 'red' }}>
+            Number of shots: {shots.length}
+          </p>
           {shots.length === 0 ? (
             <p>No shots logged yet.</p>
           ) : (
