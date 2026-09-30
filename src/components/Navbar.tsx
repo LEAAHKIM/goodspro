@@ -21,8 +21,8 @@ function Navbar() {
         <div className="nav-links">
           {user ? (
             <>
-              <span className="nav-item user">{user.email}</span>
-              <button className="nav-item user" onClick={handleSignOut}>sign out</button>
+              <span className="nav-item">{user.email}</span>
+              <button className="nav-item" onClick={handleSignOut}>sign out</button>
             </>
           ) : (
             <button className="nav-item user" onClick={handleSignIn}>sign in</button>

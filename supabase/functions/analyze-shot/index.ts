@@ -16,15 +16,7 @@ const shotAnalysisSchema = {
         "uncertain",
       ],
     },
-    confidence: {
-      type: "number",
-    },
-    evidence: {
-      type: "array",
-      items: {
-        type: "string",
-      },
-    },
+
     recommendation: {
       type: "object",
       properties: {
@@ -32,6 +24,7 @@ const shotAnalysisSchema = {
           type: "string",
           enum: ["grind", "dose", "yield", "temperature"],
         },
+
         direction: {
           type: "string",
           enum: [
@@ -41,25 +34,33 @@ const shotAnalysisSchema = {
             "decrease",
           ],
         },
+
         magnitude: {
           type: "string",
           enum: ["small", "moderate", "large"],
         },
       },
-      required: ["variable", "direction", "magnitude"],
+
+      required: [
+        "variable",
+        "direction",
+        "magnitude",
+      ],
+
       additionalProperties: false,
     },
+
     explanation: {
       type: "string",
     },
   },
+
   required: [
     "diagnosis",
-    "confidence",
-    "evidence",
     "recommendation",
     "explanation",
   ],
+
   additionalProperties: false,
 };
 
@@ -69,7 +70,9 @@ export default {
     async (req, ctx) => {
       if (!ANTHROPIC_API_KEY) {
         return Response.json(
-          { error: "Anthropic API key is not configured" },
+          {
+            error: "Anthropic API key is not configured",
+          },
           { status: 500 },
         );
       }
@@ -80,14 +83,17 @@ export default {
         "https://api.anthropic.com/v1/messages",
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
             "x-api-key": ANTHROPIC_API_KEY,
             "anthropic-version": "2023-06-01",
           },
+
           body: JSON.stringify({
             model: "claude-sonnet-5",
-            max_tokens: 500,
+
+            max_tokens: 1200,
 
             system: `
 You are an espresso extraction assistant.
@@ -108,6 +114,13 @@ has the same meaning across different grinders.
 
 If the available information is insufficient to make a
 confident diagnosis, use "uncertain".
+
+Keep the response concise.
+
+The explanation must be only 1–2 sentences.
+Do not provide a confidence score.
+Do not provide a list of evidence.
+Give only one primary recommendation.
             `,
 
             messages: [
@@ -131,31 +144,80 @@ ${JSON.stringify(shot, null, 2)}`,
 
       const data = await response.json();
 
+      console.log("Anthropic status:", response.status);
+      console.log(
+        "Anthropic stop reason:",
+        data.stop_reason,
+      );
+
       if (!response.ok) {
+        console.error("Anthropic API error:", data);
+
         return Response.json(
           { error: data },
           { status: response.status },
         );
       }
 
+      if (data.stop_reason === "max_tokens") {
+        console.error(
+          "Claude output was truncated because max_tokens was reached",
+        );
+
+        return Response.json(
+          {
+            error:
+              "Claude's analysis was cut off before it finished. Please try again.",
+          },
+          { status: 500 },
+        );
+      }
+
       const textBlock = data.content?.find(
-        (block: { type: string }) => block.type === "text"
+        (block: { type: string }) =>
+          block.type === "text",
       );
 
       const text = textBlock?.text;
 
       if (!text) {
+        console.error(
+          "Claude returned no text:",
+          data,
+        );
+
         return Response.json(
-          { error: "Claude returned no text analysis" },
+          {
+            error: "Claude returned no text analysis",
+          },
           { status: 500 },
         );
       }
 
-      const analysis = JSON.parse(text);
+      try {
+        const analysis = JSON.parse(text);
 
-      return Response.json({
-        analysis,
-      });
+        return Response.json({
+          analysis,
+        });
+      } catch (error) {
+        console.error(
+          "Failed to parse Claude JSON:",
+          error,
+        );
+
+        console.error(
+          "Claude text:",
+          text,
+        );
+
+        return Response.json(
+          {
+            error: "Claude returned invalid JSON",
+          },
+          { status: 500 },
+        );
+      }
     },
   ),
 };

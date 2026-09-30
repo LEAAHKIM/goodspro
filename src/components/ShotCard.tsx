@@ -19,13 +19,13 @@ export interface ShotAnalysis {
     | 'over_extracted'
     | 'balanced'
     | 'uncertain'
-  confidence: number
-  evidence: string[]
+
   recommendation: {
     variable: 'grind' | 'dose' | 'yield' | 'temperature'
     direction: 'finer' | 'coarser' | 'increase' | 'decrease'
     magnitude: 'small' | 'moderate' | 'large'
   }
+
   explanation: string
 }
 
@@ -118,28 +118,13 @@ function ShotCard({ shot, onContextMenu }: ShotCardProps) {
           </h3>
 
           <p>
-            Confidence: {Math.round(analysis.confidence * 100)}%
+            <strong>Next step:</strong>{' '}
+            {analysis.recommendation.direction}{' '}
+            {analysis.recommendation.variable}{' '}
+            ({analysis.recommendation.magnitude} adjustment)
           </p>
 
           <p>{analysis.explanation}</p>
-
-          <p>
-            <strong>Recommendation:</strong>{' '}
-            {analysis.recommendation.direction}{' '}
-            {analysis.recommendation.variable} (
-            {analysis.recommendation.magnitude} adjustment)
-          </p>
-
-          {analysis.evidence.length > 0 && (
-            <div>
-              <strong>Evidence:</strong>
-              <ul>
-                {analysis.evidence.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
     </div>
