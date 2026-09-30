@@ -8,10 +8,10 @@ Track how every espresso extraction pulls, see what's wrong and how you can perf
 
 ## Features
 
-<img src="public/images/bean_gallery.png" width=500/>
+<img src="public/images/bean_gallery.png" width=700/>
 
-<img src="public/images/bean_log.png" width=500/>
+<img src="public/images/bean_log.png" width=700/>
 
-<img src="public/images/logging.png" width=500/>
+<img src="public/images/logging.png" width=700/>
 
-<img src="public/images/analysis.png" width=500/>
+<img src="public/images/analysis.png" width=700/>
