@@ -8,10 +8,14 @@ Track how every espresso extraction pulls, see what's wrong and how you can perf
 
 ## Features
 
-<img src="public/images/bean_gallery.png" width=700/>
+Users can keep track of all espresso beans and their profile in this gallery view.
+<img src="public/images/bean_gallery.png" width=800/>
 
-<img src="public/images/bean_log.png" width=700/>
+Select an espresso bean profile to log specific extraction notes per shot pulled.
+<img src="public/images/bean_log.png" width=800/>
 
-<img src="public/images/logging.png" width=700/>
+Specific extraction data such as dose, time, yield, and tasting notes are recorded. Every submission additionally logs the day.
+<img src="public/images/logging.png" width=800/>
 
-<img src="public/images/analysis.png" width=700/>
+Users can receive AI guidance on how to improve their next espresso extraction.
+<img src="public/images/analysis.png" width=800/>
